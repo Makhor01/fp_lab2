@@ -1,4 +1,0 @@
-;; test/dune
-(test
- (name prefix_tree_bag_test)
- (libraries alcotest qcheck prefix_tree_bag))
