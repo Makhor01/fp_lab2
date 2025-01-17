@@ -22,7 +22,7 @@ jobs:
         uses: avsm/setup-ocaml@v2
         with:
           ocaml-compiler: '5.1.0' # Укажите нужную версию OCaml
-          opam-repository: 'default'
+          opam-repositories: 'default'
 
       # Шаг 3: Установить зависимости через Opam
       - name: Install dependencies
