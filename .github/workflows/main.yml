@@ -35,8 +35,10 @@ jobs:
           eval $(opam env)
           dune build
 
-      # Шаг 5: Запустить тесты
-      - name: Run tests
+      - name: Compile and run tests
         run: |
           eval $(opam env)
-          dune runtest
+          # Компиляция тестов
+          ocamlfind ocamlc -o test -package alcotest -linkpkg prefix_tree_bag.ml
+          # Запуск тестов
+          ./test
