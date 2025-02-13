@@ -1,0 +1,4 @@
+(test
+ (name bag_test)
+ (libraries bag alcotest qcheck qcheck-alcotest)
+ (modules bag_test))

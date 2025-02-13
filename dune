@@ -1,3 +1,0 @@
-(executable
-  (name prefix_tree_bag)
-  (libraries  alcotest))

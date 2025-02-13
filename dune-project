@@ -1,4 +1,4 @@
-(lang dune 3.16)
+(lang dune 2.0)
 
 (name fp_lab2)
 
@@ -19,7 +19,7 @@
  (name fp_lab2)
  (synopsis "ITMO FP course laboratory work #2")
  (description "s")
- (depends ocaml dune (alcotest :with-test) (junit_alcotest :with-test))
- (allow_empty))
+ (depends ocaml dune (alcotest :with-test) (Qcheck :with-test) (junit_alcotest :with-test))
+ )
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html

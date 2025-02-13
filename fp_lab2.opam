@@ -10,13 +10,13 @@ doc: "https://url/to/documentation"
 bug-reports: "https://github.com/username/reponame/issues"
 depends: [
   "ocaml"
-  "dune" {>= "3.16"}
+  "dune"
   "alcotest" {with-test}
+  "Qcheck" {with-test}
   "junit_alcotest" {with-test}
-  "odoc" {with-doc}
 ]
 build: [
-  ["dune" "subst"] {dev}
+  ["dune" "subst"] {pinned}
   [
     "dune"
     "build"
