@@ -9,36 +9,34 @@ on:
       - main
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      # Шаг 1: Проверить код репозитория
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      # Шаг 2: Установить OCaml и Opam
-      - name: Set-up OCaml
-        uses: ocaml/setup-ocaml@v3
-        with:
-          ocaml-compiler: 5
+    - name: Set up OCaml
+      uses: ocaml/setup-ocaml@v2
+      with:
+        ocaml-version: '4.14.0'  # Можно заменить на нужную версию OCaml
 
-      # Шаг 3: Установить зависимости через Opam
-      - name: Install dependencies
-        run: |
-          eval $(opam env)
-          opam install dune alcotest --yes
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y opam
+        opam init --auto-setup
+        opam switch create 4.14.0  # Замените на вашу версию OCaml
+        eval $(opam env)
+        opam install alcotest qcheck qcheck-alcotest
 
-      # Шаг 4: Скомпилировать проект
-      - name: Build the project
-        run: |
-          eval $(opam env)
-          dune build
+    - name: Build and test
+      run: |
+        eval $(opam env)
+        dune build
+        dune runtest  # Запускает тесты, если они настроены через dune
 
-      - name: Compile and run tests
-        run: |
-          eval $(opam env)
-          # Компиляция тестов
-          ocamlfind ocamlc -o test -package alcotest -linkpkg prefix_tree_bag.ml
-          # Запуск тестов
-          ./test
+    - name: Run tests
+      run: |
+        eval $(opam env)
+        dune runtest --verbose
