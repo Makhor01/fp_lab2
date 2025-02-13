@@ -19,14 +19,14 @@ jobs:
     - name: Set up OCaml
       uses: ocaml/setup-ocaml@v2
       with:
-        ocaml-version: '4.14.0'  # Можно заменить на нужную версию OCaml
+        ocaml-compiler: '4.14.0'  # Используйте ocaml-compiler вместо ocaml-version
 
     - name: Install dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y opam
         opam init --auto-setup
-        opam switch create 4.14.0  # Замените на вашу версию OCaml
+        opam switch create . --deps-only  # Создаёт switch и устанавливает зависимости из .opam файлов
         eval $(opam env)
         opam install alcotest qcheck qcheck-alcotest
 
