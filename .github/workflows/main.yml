@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
@@ -19,24 +19,21 @@ jobs:
     - name: Set up OCaml
       uses: ocaml/setup-ocaml@v2
       with:
-        ocaml-compiler: '4.14.0'  # Используйте ocaml-compiler вместо ocaml-version
+        ocaml-compiler: '4.14.0'
+
+    - name: Remove existing switch (if any)
+      run: |
+        eval $(opam env)
+        opam switch remove . --yes || true  # Игнорировать ошибку, если переключатель не существует
 
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y opam
-        opam init --auto-setup
-        opam switch create . --deps-only  # Создаёт switch и устанавливает зависимости из .opam файлов
         eval $(opam env)
+        opam switch create . --deps-only  # Создать новый переключатель
         opam install alcotest qcheck qcheck-alcotest
 
     - name: Build and test
       run: |
         eval $(opam env)
         dune build
-        dune runtest  # Запускает тесты, если они настроены через dune
-
-    - name: Run tests
-      run: |
-        eval $(opam env)
-        dune runtest --verbose
+        dune runtest
